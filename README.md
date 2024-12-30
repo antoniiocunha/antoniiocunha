@@ -32,5 +32,6 @@ Atualmente, estou focado no desenvolvimento da minha startup.
 </div>
 
 
+![Snake Animation](https://github.com/antoniiocunha/antoniiocunha/blob/output/github-contribution-grid-snake.svg)
 
 
