@@ -46,10 +46,10 @@ jobs:
         run: |
           # Atualiza o README.md com as URLs das imagens geradas
           echo "## GitHub Contribution Snake" >> README.md
-          echo "![Snake Animation](https://github.com/${{ github.repository }}/blob/output/github-contribution-grid-snake.svg)" >> README.md
-          echo "![Snake Animation Dark](https://github.com/${{ github.repository }}/blob/output/github-contribution-grid-snake-dark.svg)" >> README.md
-          echo "![Snake Animation Light](https://github.com/${{ github.repository }}/blob/output/github-contribution-grid-snake-light.svg)" >> README.md
-          echo "![Snake Animation Custom](https://github.com/${{ github.repository }}/blob/output/github-contribution-grid-snake-custom.svg)" >> README.md
+          echo "![Snake Animation](https://github.com/antoniiocunha/antoniiocunha/blob/output/github-contribution-grid-snake.svg)" >> README.md
+          echo "![Snake Animation Dark](https://github.com/antoniiocunha/antoniiocunha/blob/output/github-contribution-grid-snake-dark.svg)" >> README.md
+          echo "![Snake Animation Light](https://github.com/antoniiocunha/antoniiocunha/blob/output/github-contribution-grid-snake-light.svg)" >> README.md
+          echo "![Snake Animation Custom](https://github.com/antoniiocunha/antoniiocunha/blob/output/github-contribution-grid-snake-custom.svg)" >> README.md
           git add README.md
           git commit -m "Update README with new Snake Animations"
           git push
