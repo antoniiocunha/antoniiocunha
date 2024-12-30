@@ -1,0 +1,55 @@
+name: Generate and Update Contribution Snake
+
+on:
+  # Executar automaticamente a cada 4 horas
+  schedule:
+    - cron: "0 */4 * * *"  # Executar a cada 4 horas
+  
+  # Permite execução manual do workflow
+  workflow_dispatch:
+
+  # Executa em cada push na branch main
+  push:
+    branches:
+      - main
+
+jobs:
+  generate:
+    permissions:
+      contents: write  # Necessário para fazer push na branch 'output'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10  # Definir o tempo máximo do job
+
+    steps:
+      # Passo 1: Gera o arquivo da cobrinha em formato SVG com base nas contribuições do GitHub
+      - name: Generate GitHub Contribution Snake Animation
+        uses: Platane/snk/svg-only@v3
+        with:
+          github_user_name: ${{ github.repository_owner }}  # Usa o nome do proprietário do repositório
+          outputs: |
+            dist/github-contribution-grid-snake.svg
+            dist/github-contribution-grid-snake-dark.svg?palette=github-dark  # Paleta de cores escura
+            dist/github-contribution-grid-snake-light.svg?palette=github-light  # Paleta de cores clara
+            dist/github-contribution-grid-snake-custom.svg?palette=custom:007bff,ff6600  # Paleta personalizada (azul e laranja)
+
+      # Passo 2: Publica a imagem gerada na branch 'output' para ser acessada via GitHub Pages
+      - name: Push GitHub Contribution Snake to output branch
+        uses: crazy-max/ghaction-github-pages@v3.1.0
+        with:
+          target_branch: output  # Branch onde a imagem será armazenada
+          build_dir: dist  # Diretório onde a imagem SVG foi gerada
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Usado para autenticar e fazer o push para o repositório
+
+      # Passo 3: Atualiza o arquivo README.md para mostrar a imagem da cobrinha
+      - name: Update README with Snake Animation
+        run: |
+          # Atualiza o README.md com as URLs das imagens geradas
+          echo "## GitHub Contribution Snake" >> README.md
+          echo "![Snake Animation](https://github.com/${{ github.repository }}/blob/output/github-contribution-grid-snake.svg)" >> README.md
+          echo "![Snake Animation Dark](https://github.com/${{ github.repository }}/blob/output/github-contribution-grid-snake-dark.svg)" >> README.md
+          echo "![Snake Animation Light](https://github.com/${{ github.repository }}/blob/output/github-contribution-grid-snake-light.svg)" >> README.md
+          echo "![Snake Animation Custom](https://github.com/${{ github.repository }}/blob/output/github-contribution-grid-snake-custom.svg)" >> README.md
+          git add README.md
+          git commit -m "Update README with new Snake Animations"
+          git push
