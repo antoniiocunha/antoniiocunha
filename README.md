@@ -16,7 +16,7 @@ Atualmente, estou focado no desenvolvimento da minha startup.
 
 
 <div>
-  <a href="https://beacons.ai/antoniiocunha">
+  <a href="(https://github.com/antoniiocunha)">
     <img width="42%" src="https://github-readme-stats.vercel.app/api?username=antoniiocunha&show_icons=true&theme=dark&include_all_commits=true&count_private=true"/>
     <img width="50%" src="https://github-readme-stats.vercel.app/api/top-langs/?username=antoniiocunha&layout=compact&langs_count=16&theme=dark"/>
   </a>
