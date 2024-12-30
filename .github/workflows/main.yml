@@ -1,14 +1,9 @@
 name: Generate and Update Contribution Snake
 
 on:
-  # Executar automaticamente a cada 4 horas
   schedule:
     - cron: "0 */4 * * *"  # Executar a cada 4 horas
-  
-  # Permite execução manual do workflow
   workflow_dispatch:
-
-  # Executa em cada push na branch main
   push:
     branches:
       - main
@@ -16,32 +11,38 @@ on:
 jobs:
   generate:
     permissions:
-      contents: write  # Necessário para fazer push na branch 'output'
+      contents: write  # Permissão necessária para fazer push na branch 'output'
     runs-on: ubuntu-latest
-    timeout-minutes: 10  # Definir o tempo máximo do job
+    timeout-minutes: 10  # Tempo máximo de execução
 
     steps:
       # Passo 1: Gera o arquivo da cobrinha em formato SVG com base nas contribuições do GitHub
       - name: Generate GitHub Contribution Snake Animation
         uses: Platane/snk/svg-only@v3
         with:
-          github_user_name: ${{ github.repository_owner }}  # Usa o nome do proprietário do repositório
+          github_user_name: ${{ github.repository_owner }}  # Nome do proprietário do repositório
           outputs: |
             dist/github-contribution-grid-snake.svg
-            dist/github-contribution-grid-snake-dark.svg?palette=github-dark  # Paleta de cores escura
-            dist/github-contribution-grid-snake-light.svg?palette=github-light  # Paleta de cores clara
-            dist/github-contribution-grid-snake-custom.svg?palette=custom:007bff,ff6600  # Paleta personalizada (azul e laranja)
+            dist/github-contribution-grid-snake-dark.svg?palette=github-dark
+            dist/github-contribution-grid-snake-light.svg?palette=github-light
+            dist/github-contribution-grid-snake-custom.svg?palette=custom:007bff,ff6600
 
-      # Passo 2: Publica a imagem gerada na branch 'output' para ser acessada via GitHub Pages
+      # Passo 2: Verifica e cria a branch 'output' se ela não existir
+      - name: Create output branch if it doesn't exist
+        run: |
+          git fetch origin
+          git checkout -b output || git checkout output
+
+      # Passo 3: Push da animação gerada para a branch 'output'
       - name: Push GitHub Contribution Snake to output branch
         uses: crazy-max/ghaction-github-pages@v3.1.0
         with:
-          target_branch: output  # Branch onde a imagem será armazenada
-          build_dir: dist  # Diretório onde a imagem SVG foi gerada
+          target_branch: output
+          build_dir: dist
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Usado para autenticar e fazer o push para o repositório
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      # Passo 3: Atualiza o arquivo README.md para mostrar a imagem da cobrinha
+      # Passo 4: Atualiza o README.md para mostrar a imagem da cobrinha
       - name: Update README with Snake Animation
         run: |
           # Atualiza o README.md com as URLs das imagens geradas
