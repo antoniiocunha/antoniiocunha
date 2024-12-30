@@ -3,14 +3,6 @@
 Estudante de Engenharia de Software na UFC e apaixonado por tecnologia e inovação.  
 Atualmente, estou focado no desenvolvimento da minha startup.
 
-## 🚀 Tecnologias e Ferramentas
-- **Linguagens e Frameworks:**
-  - Java: Spring, Hibernate  
-  - C: SDL, GTK  
-  - C++: Qt, Boost  
-  - Dart: Flutter  
-
-## 💡 Sobre Mim
 🎓 Estudante na Universidade Federal do Ceará (UFC)  
 📍 Fortaleza, Ceará  
 
