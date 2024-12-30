@@ -3,18 +3,17 @@ name: Generate and Update Contribution Snake
 on:
   schedule:
     - cron: "0 */4 * * *"  # Executar a cada 4 horas
-  workflow_dispatch:
+  workflow_dispatch:  # Allow manual trigger of the workflow
   push:
     branches:
       - main
 
 jobs:
-  generate:
+  generate:  # Indentation added here
     permissions:
       contents: write  # Permissão necessária para fazer push na branch 'output'
     runs-on: ubuntu-latest
     timeout-minutes: 10  # Tempo máximo de execução
-
     steps:
       # Passo 1: Gera o arquivo da cobrinha em formato SVG com base nas contribuições do GitHub
       - name: Generate GitHub Contribution Snake Animation
