@@ -32,21 +32,12 @@ jobs:
             dist/github-contribution-grid-snake-light.svg?palette=github-light
             dist/github-contribution-grid-snake-custom.svg?palette=custom:007bff,ff6600
 
-      # Passo 3: Verifica e cria a branch 'output' se ela não existir
-      - name: Create output branch if it doesn't exist
+      # Passo 3: Verifica, cria ou atualiza a branch 'output'
+      - name: Create or update output branch
         run: |
-          git checkout -b output || git checkout output
+          git fetch origin output:output || git checkout -b output
 
-      # Passo 4: Push da animação gerada para a branch 'output'
-      - name: Push GitHub Contribution Snake to output branch
-        uses: crazy-max/ghaction-github-pages@v3.1.0
-        with:
-          target_branch: output
-          build_dir: dist
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      # Passo 5: Atualiza o README.md para mostrar a imagem da cobrinha
+      # Passo 4: Atualiza o README.md com as imagens da cobrinha
       - name: Update README with Snake Animation
         run: |
           echo "## GitHub Contribution Snake" > README.md
@@ -58,4 +49,9 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add README.md
           git commit -m "Update README with new Snake Animations" || echo "No changes to commit"
+
+      # Passo 5: Faz o push das alterações para a branch 'output'
+      - name: Push changes to output branch
+        run: |
+          git pull origin output --rebase || echo "No changes to pull"
           git push origin output
