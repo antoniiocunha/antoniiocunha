@@ -1,4 +1,3 @@
-# Falaaa! Sou Antonio Cunha
 
 Estudante de Engenharia de Software na UFC e apaixonado por tecnologia e inovação.  
 Atualmente, estou focado no desenvolvimento da minha startup.
